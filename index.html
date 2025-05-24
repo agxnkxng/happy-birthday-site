@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday 💗</title>
+    <link rel="icon" href="./cake.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fad1fc;
+            color: #333;
+        }
+
+        .section-padding {
+            padding: 4rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-link {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ff69b4;
+        }
+
+        ::-webkit-scrollbar {
+            width: 15px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #c2b0ba;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #726769;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #801769;
+        }
+
+        /* สไตล์เพิ่มเติมสำหรับ Song for You */
+        #playlist-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 1rem;
+            background-color: #f9e1f9;
+            /* สีพื้นหลังอ่อนๆ */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            max-width: 80%;
+            text-align: center;
+        }
+
+        #playlist-section h3 {
+            font-size: 2.5rem;
+            color: #e91e63;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite alternate;
+            /* เพิ่ม animation */
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.05);
+            }
+        }
+
+        #playlist-section audio {
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* สำหรับการปรับแต่งปุ่มควบคุมของ audio player */
+        #playlist-section audio::-webkit-media-controls-panel {
+            background-color: #f37070;
+            /* สีพื้นหลังปุ่มควบคุม */
+            border-radius: 5px;
+        }
+
+        #playlist-section audio::-webkit-media-controls-play-button,
+        #playlist-section audio::-webkit-media-controls-mute-button,
+        #playlist-section audio::-webkit-media-controls-volume-slider {
+            color: #af2956;
+            /* สีไอคอนควบคุม */
+            /* เพิ่ม !important หากต้องการ override ค่า default */
+        }
+
+        /* สิ้นสุดสไตล์เพิ่มเติมสำหรับ Song for You */
+
+        /* Styles for the main playlist section that contains YouTube videos */
+        .playlist-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 2rem 1rem;
+            /* เพิ่ม padding ให้ container */
+        }
+
+        .song-card {
+            background: #2a2a72;
+            border-radius: 20px;
+            box-shadow: 0 12px 20px rgba(38, 115, 255, 0.5);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .song-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 30px rgba(38, 115, 255, 0.7);
+        }
+
+        .song-cover {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            border-bottom: 3px solid #1b1464;
+            flex-shrink: 0;
+        }
+
+        .song-info {
+            padding: 1.25rem 1.5rem;
+            background: linear-gradient(90deg, #1b1464, #3a3a99);
+            color: #f0f0f5;
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-align: center;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        iframe {
+            width: 100%;
+            height: 190px;
+            border: none;
+            border-radius: 20px 20px 0 0;
+            background: #000;
+        }
+    </style>
+</head>
+
+<body class="scroll-smooth">
+
+    <header class="bg-white shadow-lg sticky top-0 z-50 rounded-b-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="https://placehold.co/40x40/FFD1DC/FFFFFF?text=🎂" alt="Birthday Icon" class="rounded-full">
+                <span class="text-2xl font-bold text-purple-900">P Rain's Day</span>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a class="nav-link text-gray-700 hover:text-purple-500 font-medium"
+                    onclick="scrollToSection('home')">Home</a>
+                <a class="nav-link text-gray-700 hover:text-purple-500 font-medium"
+                    onclick="scrollToSection('gallery')">Gallery</a>
+                <a class="nav-link text-gray-700 hover:text-purple-500 font-medium"
+                    onclick="scrollToSection('playlist-section')">Playlist</a>
+                <a class="nav-link text-gray-700 hover:text-purple-500 font-medium"
+                    onclick="scrollToSection('letter')">Special message</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-blue-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-2 pt-2 pb-3 space-y-1 sm:px-3 rounded-b-lg">
+            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-blue-100 hover:text-purple-900"
+                onclick="scrollToSection('home'); toggleMobileMenu()">Home</a>
+            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-blue-100 hover:text-purple-900"
+                onclick="scrollToSection('gallery'); toggleMobileMenu()">Gallery</a>
+            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-blue-100 hover:text-purple-900"
+                onclick="scrollToSection('playlist-section'); toggleMobileMenu()">Playlist</a>
+            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-blue-100 hover:text-purple-900"
+                onclick="scrollToSection('letter'); toggleMobileMenu()">Special message</a>
+        </div>
+    </header>
+
+    <section id="home"
+        class="section-padding bg-gradient-to-r from-pink-100 via-yellow-100 to-green-100 text-center rounded-lg shadow-xl my-8">
+        <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
+            <div
+                class="relative w-64 h-64 md:w-80 md:h-80 bg-white rounded-full p-2 shadow-xl transform hover:scale-105 transition-transform duration-300">
+                <img src="pr.jpg" alt="p'rain's Picture"
+                    class="w-full h-full object-cover rounded-full border-4 border-purple-400">
+                <div
+                    class="absolute bottom-4 right-4 bg-yellow-300 text-gray-800 text-sm px-3 py-1 rounded-full shadow-md">
+                    🎂 Happy Birth Day!</div>
+            </div>
+            <div class="text-center md:text-left">
+                <h1 class="text-5xl md:text-6xl font-extrabold text-pink-600 leading-tight mb-4 animate-pulse">Happy
+                    Birtday nakub</h1>
+                <p class="text-lg md:text-xl text-gray-700 mb-6 max-w-xl"> Happy birthday to you, my sunshine and my
+                    star,
+                    Even when we're far apart, I know just where you are.
+                    You're the smile in my morning, the laugh in my night,
+                    This song is just for you, You're my favorite light.
+
+                </p>
+                <button onclick="scrollToSection('gallery')"
+                    class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition-transform duration-300">Gift
+                    for U</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery"
+        class="section-padding bg-gradient-to-r from-yellow-100 via-pink-100 to-purple-100 rounded-lg shadow-xl my-8">
+        <h2 class="text-4xl font-bold text-center text-purple-600 mb-12">Picture</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div
+                class="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <img src="pr1.jpg" class="w-full h-60 object-cover">
+                <p class="p-4 text-gray-700 text-sm">picture : 1</p>
+            </div>
+            <div
+                class="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <img src="pr2.jpg" class="w-full h-60 object-cover">
+                <p class="p-4 text-gray-700 text-sm">picture : 2</p>
+            </div>
+            <div
+                class="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <img src="pr3.jpg" class="w-full h-60 object-cover">
+                <p class="p-4 text-gray-700 text-sm">picture : 3</p>
+            </div>
+            <div
+                class="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <img src="pr4.jpg" class="w-full h-60 object-cover">
+                <p class="p-4 text-gray-700 text-sm">picture : 4</p>
+            </div>
+            <div
+                class="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <img src="pr5.jpg" class="w-full h-60 object-cover">
+                <p class="p-4 text-gray-700 text-sm">picture : 5</p>
+            </div>
+            <div
+                class="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <img src="pr6.jpg" class="w-full h-60 object-cover">
+                <p class="p-4 text-gray-700 text-sm">picture : 6</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="playlist-section">
+        <h3>🎬 Song for You </h3>
+        <audio controls>
+            <source src="Rainy Birthday Wishes.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <div class="playlist-container" id="playlist"></div>
+
+        <script>
+            const playlist = [
+                { title: "Orange Flower", youtubeId: "iwBfCHvFzPU" },
+                { title: "XO (Only If You Say Yes)", youtubeId: "FPDYeRk2PO8" }
+            ];
+
+            const playlistContainer = document.getElementById("playlist");
+
+            playlist.forEach(song => {
+                const songCard = document.createElement("div");
+                songCard.className = "song-card";
+
+                const cover = document.createElement("img");
+                cover.className = "song-cover";
+                cover.src = `https://i.ytimg.com/vi/${song.youtubeId}/hqdefault.jpg`;
+                cover.alt = `${song.title} cover`;
+
+                const info = document.createElement("div");
+                info.className = "song-info";
+                info.textContent = song.title;
+
+                songCard.appendChild(cover);
+                songCard.appendChild(info);
+                playlistContainer.appendChild(songCard);
+
+                cover.addEventListener("click", () => {
+                    const iframe = document.createElement("iframe");
+                    iframe.src = `https://www.youtube.com/embed/${song.youtubeId}?autoplay=1&rel=0`;
+                    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+                    iframe.allowFullscreen = true;
+
+                    songCard.replaceChild(iframe, cover);
+                });
+            });
+        </script>
+    </section>
+
+
+
+
+    <script>
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById("mobile-menu");
+            menu.classList.toggle("hidden");
+        }
+
+        function openGift() {
+            const box = document.querySelector(".gift-box");
+            const message = document.getElementById("message");
+            const image = document.getElementById("imageBox");
+
+            box.classList.toggle("open");
+            message.classList.toggle("show-message");
+            image.classList.toggle("show-image");
+        }
+    </script>
+    <style>
+        .container {
+            text-align: center;
+        }
+
+        .gift-box {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            background: #ff8989;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .lid {
+            position: absolute;
+            top: -50px;
+            width: 200px;
+            height: 50px;
+            background: #8b3d3d;
+            border-radius: 10px 10px 0 0;
+            transition: top 0.5s ease, transform 0.5s ease;
+        }
+
+        .ribbon {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 20px;
+            height: 200px;
+            background: white;
+            transform: translateX(-50%);
+        }
+
+        .gift-box.open .lid {
+            top: -120px;
+            transform: rotate(-15deg);
+        }
+
+        .message,
+        .image-box {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 1s ease, transform 0.5s ease;
+        }
+
+        .show-message,
+        .show-image {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .message {
+            color: #7a1548;
+            font-size: 1.5rem;
+            max-width: 320px;
+            margin: 0 auto 20px;
+        }
+
+        .image-box img {
+            width: 250px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+
+
+    <section class="bg-gradient-to-b from-pink-100 to-white py-20">
+        <div class="container mx-auto flex flex-col items-center justify-center text-center">
+            <div class="gift-box" onclick="openGift()">
+                <div class="lid"></div>
+                <div class="ribbon"></div>
+            </div>
+            <div class="message" id="message">
+                🎉 May this day be as sunny as your smile,<br>Happy Birthday. 🎈
+            </div>
+            <div class="image-box" id="imageBox">
+                <img src="pr7.png" alt="Happy Image">
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <section id="letter" class="section-padding bg-white rounded-lg shadow-xl my-8">
+        <h2 class="text-4xl font-bold text-center text-blue-600 mb-12">special message</h2>
+        <div
+            class="flex flex-col md:flex-row items-center md:items-start space-y-8 md:space-y-0 md:space-x-12 bg-blue-50 p-8 rounded-xl shadow-md">
+            <div class="w-full md:w-1/3 flex justify-center">
+                <img src="cartoon.jpg" class="rounded-full shadow-lg border-4 border-blue-300">
+            </div>
+            <div class="w-full md:w-2/3 text-center md:text-left">
+                <h3 class="text-3xl font-bold text-blue-700 mb-4">From Agun...</h3>
+                <p class="text-gray-700 leading-loose mb-6">
+                    To P rain, <br><br>
+                    สุขสันต์วันเกิดนะคับพี่เรน
+                    ในวันเกิดปีนี้และทุกๆปีต่อจากนี้ไป ขอให้พี่เรนมีความสุขมากๆ ขอให้พี่มีรอยยิ้มที่น่ารักและสดใส
+                    ไม่มีฝนตกในใจและสมหวังทุกคำปรารถนานะคับ ในวันเกิดของพี่เรนปีนี้
+                    น้องอยากจะบอกว่าน้องดีใจที่ได้มารู้จักกับพี่นะ
+                    ขอบคุณช่วงเวลาที่ผ่านมาที่พี่ได้เข้ามาเป็นส่วนนึงในชีวิตงุ่นนะคับ ขอให้พี่โชคดี
+                    งุ่นจะเฝ้ารอดูความสำเร็จพี่ และเป็นกำลังใจให้นะคับ
+                    สุดท้ายนี้ถ้างุ่นทำอะไรให้พี่เรนไม่สบายใจและทำตัวไม่น่ารัก ขอโทษทุกสิ่งทุกอย่างเลยนะคับ
+
+                    <br><br>
+                    ด้วยรักและห่วงใย
+                    <br><br>
+                    ❤️ <br>
+                    องุ่น
+                </p>
+                <p class="text-sm text-gray-500">เขียนเมื่อ: 15 มิถุนายน 2568</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-purple-700 text-white text-center py-6 rounded-t-lg mt-8">
+        <p>Happy Birthday nakub . </p>
+        <p class="text-sm mt-2">❤️</p>
+    </footer>
+
+    <script>
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+        document.addEventListener('click', function (event) {
+            if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target) && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
